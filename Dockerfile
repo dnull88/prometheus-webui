@@ -4,5 +4,6 @@ COPY package.json yarn.lock ./
 RUN yarn
 COPY . ./
 EXPOSE 3000
-ENTRYPOINT ["bash", "entrypoint.sh"]
+ENTRYPOINT ["bash", "/usr/src/app/entrypoint.sh"]
+
 
