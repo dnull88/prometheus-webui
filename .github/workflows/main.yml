@@ -5,7 +5,7 @@ on:
 jobs:
   buildDocker:
     runs-on: ubuntu-latest
-    name: Build docker image and push to ECR
+    name: Build docker image and push to AWS ECR
     steps:
     - uses: actions/checkout@v1
 
@@ -24,9 +24,8 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: common/gcp-stack/prometheus-webui
-        IMAGE_TAG: ${{ github.ref:10 }}
+        IMAGE_TAG: $(echo ${GITHUB_REF:10})
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
-
